@@ -1,0 +1,94 @@
+<h2>Map : {{gameTest.getCurrentMap().mapName}}</h2>
+
+<div  class ="map" >
+  <ng-container *ngFor="let x of [9,8,7,6,5,4,3,2,1,0]">
+    <ng-container  *ngFor="let y of [9,8,7,6,5,4,3,2,1,0]">
+      <img  class ='tile' src= "{{gameTest.getCurrentMap().getTileSVG(gameTest.getCurrentMap().getTile(x,y))}}"
+           [attr.data-x]=x [attr.datay]=y  (click)="put_a_block(x,y)"/>
+    </ng-container>
+  </ng-container>
+</div>
+
+<div class = "player">
+  <textarea class="txt" #newName>Change Player's name here</textarea>
+  <button (click)="set_new_player_name()"> Validate </button>
+  <h3>Player : {{gameTest.getPlayer().name}}</h3>
+  <ng-container  *ngFor="let i of [0,1,2,3]">
+    <img  class = 'tile' src="{{gameTest.getPlayer().getBlockSVG(i)}}" (click)="chooseBlock(i)">
+    <p>{{gameTest.getPlayer().inventaire.nbBlock(i)}}</p>
+  </ng-container>
+  <h4> Player Score : {{gameTest.getScore()}}</h4>
+  <h4> Score Limit : {{gameTest.getScorLimit()}}</h4>
+</div>
+
+<div>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exempleModal" (click)="openModalReview()"> Review 5 Top Scores </button>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ExitGameModal" (click)="openModalExit()"> Exit game </button>
+</div>
+
+<div class="undoButtons">
+  <button  type="button" class="btn btn-secondary" (click)="onUndo()"> Undo </button>
+  <button  type="button" class="btn btn-secondary" (click)="onRedo()"> Redo </button>
+</div>
+
+
+<!-- Modals -->
+<!-- Modal to display an error message if the player tries to put a block on a Tile other than Grass -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayError}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">You cannot put a Block on a Tile other than Grass Tile or an already occupied Tile </h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseHandledError()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseHandledError()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to see top 5 scores of a Map [R22_9_TOP_SCORE] (BONUS) -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayReview}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">See the top 5 scores made for map {{gameTest.getCurrentMap().mapName}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseHandledReview()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <ng-container  *ngFor="let i of gameTest.getCurrentMap().scores">
+          <p> Player : {{i.player}}   -  Score : {{i.score}} </p>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseHandledReview()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to save your score when leaving a map or at the end of the Game -->
+
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayExit}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Game end, save your Score (save then close) before leaving Map {{gameTest.getCurrentMap().mapName}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseHandledExit()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p> For map {{gameTest.getCurrentMap().mapName}} : Player {{gameTest.getPlayer().name}} - score {{gameTest.getScore()}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseHandledExit()" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveScore()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

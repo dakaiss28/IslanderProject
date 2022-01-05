@@ -1,0 +1,21 @@
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.overlay-backdrop {
+  background: #000;
+  opacity: 0.85 !important;
+}
+
+.overlay-panel {
+  width: 60%;
+  height: 90%;
+  background: white;
+}

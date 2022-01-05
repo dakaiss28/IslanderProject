@@ -1,0 +1,25 @@
+<nav>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Welcome to Islanders ! </h1>
+      <img class="icon"  src = "assets/ranking.svg">
+      <div class = "map List">
+        <h2>Choose a map </h2>
+        <div class="list-group">
+          <ng-container *ngFor="let x of gameService.getGame.getMapsName()">
+            <button type="button" class="list-group-item list-group-item-action" (click)="selectMap(x)" >Map {{x}}</button>
+          </ng-container>
+        </div>
+        <h2> Or... make a new Map ! </h2>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="newRandomMap()">Validate</button>
+          </div>
+    </div>
+  </div>
+  </div>
+</nav>
+
+<router-outlet *ngIf="router.url !== '/'"></router-outlet>
+
+
